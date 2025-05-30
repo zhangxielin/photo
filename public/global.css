@@ -1,0 +1,126 @@
+/* 全局样式 */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #333;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.layout-toggle {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  gap: 20px;
+}
+
+.layout-toggle button {
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.layout-toggle button:hover {
+  background-color: #555;
+}
+
+.photo-list {
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  justify-items: center;
+}
+
+.photo-item {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 增加阴影效果 */
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* 增加动画效果 */
+}
+
+.photo-item:hover {
+  transform: scale(1); /* 悬停时稍微放大图片 */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* 鼠标悬停时阴影增强 */
+}
+
+.photo-thumbnail {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.photo-description {
+  padding: 15px;
+  text-align: center;
+}
+
+.photo-description h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.photo-description p {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 小图模式样式 */
+.photo-list.small-layout {
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 每行3-4个图 */
+}
+
+/* 大图模式样式 */
+.photo-list.large-layout {
+  grid-template-columns: 1fr; /* 每行1张大图 */
+}
+/* 响应式设计 */
+.large-layout .photo-item {
+  max-width: 1200px;
+  width: 100%;
+  max-height: calc(100vh+120px); /* 让每项最大不超过视口高度 */
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.large-layout .photo-thumbnail { width: 100%;
+  height: auto;
+  max-height: calc(100vh); /* 预留描述空间，避免超出视口 */
+  object-fit: contain; /* 避免裁剪图片 */
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .photo-list.small-layout {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* 在小屏设备下每行显示2-3张图 */
+  }
+
+  .photo-list.large-layout {
+    grid-template-columns: 1fr; /* 大图模式下每行依然显示1张大图 */
+  }
+}
+
+@media (max-width: 480px) {
+  .photo-description h3 {
+    font-size: 1.2rem; /* 在手机屏幕上减少标题字体 */
+  }
+  .photo-description p {
+    font-size: 0.9rem; /* 在手机屏幕上减小描述字体 */
+  }
+}

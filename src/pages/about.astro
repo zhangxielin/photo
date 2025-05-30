@@ -1,0 +1,11 @@
+---
+import { Markdown } from '@astro/types';
+
+const aboutContent = await import('../content/about.md');
+---
+
+<DefaultLayout>
+  <article>
+    <Markdown>{aboutContent}</Markdown>
+  </article>
+</DefaultLayout>
