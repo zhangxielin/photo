@@ -1,0 +1,8 @@
+# 屏蔽 node_modules 和常见生成文件
+node_modules/
+.DS_Store
+dist/
+.temp/
+.cache/
+.env
+*.log
