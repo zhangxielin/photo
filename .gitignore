@@ -6,4 +6,5 @@ dist/
 .cache/
 .env
 *.log
-.astro
+.astro/
+.vscode/
