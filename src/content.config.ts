@@ -1,24 +1,31 @@
 // src/content.config.ts
+import { defineCollection, z } from 'astro:content'; // 注意导入 `z`
 
-import { defineCollection } from 'astro:content';
+const albumsCollection = defineCollection({
+  type: 'content', // 或 'data'（如果是 Markdown/JSON 内容，通常用 'content'）
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    coverImage: z.string(), // 封面图片路径
+    // 可选：添加默认值或额外约束
+    date: z.date(), // 日期字段
+    Featured: z.boolean().default(false), // 默认值
+  }),
+});
 
+const galleryCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    image: z.string(), // 图片路径
+    date: z.date(),   // 必填日期
+    featured: z.boolean().default(false), // 默认 false
+  }),
+});
+
+// 导出集合
 export const collections = {
-  gallery: defineCollection({
-    type: 'markdown', // 定义为 Markdown 文件集合
-    schema: {
-      title: 'string',
-      description: 'string',
-      image: 'string',
-      date: 'string',
-      featured: 'boolean',
-    },
-  }),
-  albums: defineCollection({
-    type: 'markdown', // 如果 albums 是 JSON 数据，可以设置为 json 类型
-    schema: {
-      title: 'string',
-      description: 'string',
-      coverImage: 'string', // 专辑封面
-    },
-  }),
+  albums: albumsCollection,
+  gallery: galleryCollection,
 };

@@ -1,14 +1,21 @@
 ---
 import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 import Header from '../components/Header.astro';
 
-// 获取所有图片的 Markdown 文件
+// 获取所有图片的 Markdown 文件 经过验证，这个排序是有效的。
 const photos = await getCollection('gallery');
 
 // 分类处理函数
-const getLatestPhotos = (photos) => {
-  return [...photos].sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
+
+
+const getLatestPhotos = (photos: CollectionEntry<'gallery'>[]) => {
+  return [...photos].sort((a, b) => 
+    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  );
 };
+
+const sortedPhotos = getLatestPhotos(photos);
 
 const getRandomPhotos = (photos) => {
   return [...photos].sort(() => Math.random() - 0.5);
@@ -18,7 +25,7 @@ const getFeaturedPhotos = (photos) => {
   return photos.filter((photo) => photo.data.featured === true);
 };
 
-// 默认展示“最新”分类的照片
+// 默认展示“最新”分类的照片 经过验证，这个排序是有效的。
 let filteredPhotos = getLatestPhotos(photos);
 ---
 

@@ -1,6 +1,8 @@
 ---
-import { getAllAlbums } from '../utils/albumHelper'; // 假设你有一个获取所有专辑的函数
-import { Link } from '@astro/components';
+//import { getAllAlbums } from '../utils/albumHelper'; // 假设你有一个获取所有专辑的函数
+//import { Link } from '@astro/components';
+import SomeComponent from '../components/SomeComponent.astro';
+import Header from '../components/Header.astro';
 
 const albums = getAllAlbums(); // 获取所有专辑的数组
 // utils/albumHelper.js
@@ -32,17 +34,7 @@ export function getAllAlbums() {
     <link rel="stylesheet" href="/styles/global.css" />
   </head>
   <body>
-    <header>
-      <nav>
-        <ul>
-          <li><a href="/">首页</a></li>
-          <li><a href="/albums">专辑</a></li>
-          <li><a href="/videos">视频</a></li>
-          <li><a href="/about">个人介绍</a></li>
-        </ul>
-      </nav>
-    </header>
-
+    <header />
     <main>
       <h1>我的专辑</h1>
       <div class="album-list">
