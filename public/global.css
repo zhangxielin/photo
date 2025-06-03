@@ -33,10 +33,26 @@ h1 {
   background-color: #555;
 }
 
+.layout-toggle button:active {
+  background-color: #150f2a;
+}
+
+.layout-toggle button.active {
+  background-color: #ffcb00;
+  color: #333;
+  font-weight: bold;
+}
+
+main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
 .photo-list {
   display: grid;
   gap: 20px;
-  padding: 20px;
+  padding: 20px 0;
   justify-items: center;
 }
 
@@ -99,7 +115,8 @@ h1 {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.large-layout .photo-thumbnail { width: 100%;
+.large-layout .photo-thumbnail { 
+  width: 100%;
   height: auto;
   max-height: calc(100vh); /* 预留描述空间，避免超出视口 */
   object-fit: contain; /* 避免裁剪图片 */
@@ -123,4 +140,48 @@ h1 {
   .photo-description p {
     font-size: 0.9rem; /* 在手机屏幕上减小描述字体 */
   }
+}
+
+header {
+  background-color: #1f1f1f;
+  color: rgb(136, 73, 73);
+  padding: 10px 0;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+}
+
+header h1 {
+  background: url("src/assets/logo.png") no-repeat;
+  background-size: cover;
+  font-size: 2.5rem;
+  margin: 0;
+  display: inlie-block;
+  width: 200px;
+  height: 50px;
+
+}
+
+header h1 span {
+  display: none;
+}
+
+nav {
+  gap: 20px;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 20px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.gallery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

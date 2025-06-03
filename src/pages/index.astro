@@ -39,11 +39,13 @@ let filteredPhotos = getLatestPhotos(photos);
   <body>
     <Header />
     <main>
-      <h1>我的画廊</h1>
-      <!-- 切换布局按钮 -->
-      <div class="layout-toggle">
-        <button data-layout="small">小图模式</button>
-        <button data-layout="large">大图模式</button>
+      <div class="gallery-header">
+        <h2>我的画廊</h2>
+        <!-- 切换布局按钮 -->
+        <div class="layout-toggle">
+          <button data-layout="small">小图模式</button>
+          <button data-layout="large">大图模式</button>
+        </div>
       </div>
       <!-- 二级分类导航 -->
       <div class="category-nav">
@@ -54,16 +56,7 @@ let filteredPhotos = getLatestPhotos(photos);
 
       <!-- 展示图片列表 -->
       <div class="photo-list small-layout" id="photo-list">
-        {filteredPhotos.map((photo) => (
-          <div class="photo-item" key={photo.id}>
-            <img src={photo.data.image} alt={photo.data.title} class="photo-thumbnail" />
-            <div class="photo-description">
-              <h3>{photo.data.title}</h3>
-              <p>{photo.data.description}</p>
-              <p>{photo.data.date}</p>
-            </div>
-          </div>
-        ))}
+        <!-- 初始为空，JS 加载时填充 -->
       </div>
     </main>
 
@@ -76,53 +69,67 @@ let filteredPhotos = getLatestPhotos(photos);
   const layoutButtons = document.querySelectorAll('.layout-toggle button');
   const filterButtons = document.querySelectorAll('.category-nav button');
 
-  const photos = photosJSON;
-
-  function getLatestPhotos(photos) {
-    return [...photos].sort((a, b) => new Date(b.data.date) - new Date(a.data.date));
-  }
-
-  function getRandomPhotos(photos) {
-    return [...photos].sort(() => Math.random() - 0.5);
-  }
-
-  function getFeaturedPhotos(photos) {
-    return photos.filter((photo) => photo.data.featured === true);
-  }
-
-  function updatePhotoList(photos) {
-    photoList.innerHTML = photos.map((photo) => `
-      <div class="photo-item">
-        <img src="${photo.data.image}" alt="${photo.data.title}" class="photo-thumbnail" />
-        <div class="photo-description">
-          <h3>${photo.data.title}</h3>
-          <p>${photo.data.description}</p>
-        </div>
-      </div>
-    `).join('');
-  }
-
+   // 切换布局
   layoutButtons.forEach((button) => {
     button.addEventListener('click', () => {
       const layout = button.getAttribute('data-layout');
       photoList.className = `photo-list ${layout}-layout`;
+
+      layoutButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
     });
   });
 
+  // 加载数据并更新 DOM
+  async function fetchPhotos(filter) {
+    try {
+      const res = await fetch(`/api/photos.json?filter=${filter}`);
+      const data = await res.json();
+      updatePhotoList(data);
+    } catch (err) {
+      console.error('加载图片失败', err);
+    }
+  }
+
+  function updatePhotoList(photos) {
+  photoList.innerHTML = photos.map((photo) => `
+    <div class="photo-item">
+      <img src="${photo.image}" alt="${photo.title}" class="photo-thumbnail" />
+      <div class="photo-description">
+        <h3>${photo.title}</h3>
+        <p>${photo.description}</p>
+        <p>${photo.date}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+
+  // 初始化加载默认分类
+  fetchPhotos('latest');
+
+  // 分类按钮点击事件
   filterButtons.forEach((button) => {
     button.addEventListener('click', () => {
       const filter = button.getAttribute('data-filter');
-      let filteredPhotos;
-      if (filter === 'latest') {
-        filteredPhotos = getLatestPhotos(photos);
-      } else if (filter === 'random') {
-        filteredPhotos = getRandomPhotos(photos);
-      } else if (filter === 'featured') {
-        filteredPhotos = getFeaturedPhotos(photos);
-      }
-      updatePhotoList(filteredPhotos);
+      fetchPhotos(filter);
     });
   });
+
+  layoutButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const layout = button.getAttribute('data-layout');
+    photoList.className = `photo-list ${layout}-layout`;
+
+    // 先移除所有按钮的 active 类
+    layoutButtons.forEach(btn => btn.classList.remove('active'));
+    // 给当前点击的按钮添加 active 类
+    button.classList.add('active');
+  });
+});
+ 
+
+  
 </script>
   </body>
 </html>
