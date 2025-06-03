@@ -152,7 +152,7 @@ header {
 }
 
 header h1 {
-  background: url("src/assets/logo.png") no-repeat;
+  background: url("logo.png") no-repeat;
   background-size: cover;
   font-size: 2.5rem;
   margin: 0;
