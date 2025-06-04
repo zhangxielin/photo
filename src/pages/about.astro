@@ -1,5 +1,40 @@
 ---
+import { getCollection } from 'astro:content';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro'; // 如果你有 footer 组件
+
+// 加载 Markdown 文件内容
+const allPages = await getCollection('pages');
+const aboutEntry = allPages.find(entry => entry.slug === 'about');
+
+if (!aboutEntry) {
+  throw new Error('找不到 about.md，请确认它存在于 src/content/pages/ 中');
+}
+
+const { Content } = await aboutEntry.render();
+const { data } = aboutEntry;
+
+
+
+
+
+
 ---
-<html>
-  <body></body>
+
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{data.title}</title>
+    <link rel="stylesheet" href="/global.css" />
+  </head>
+  <body>
+    <Header />
+    <main class="aboutcontainer">
+      <article>
+        <Content />
+      </article>
+    </main>
+    <Footer />
+  </body>
 </html>
