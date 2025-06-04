@@ -7,9 +7,9 @@ const currentPath = Astro.url.pathname;
   <nav>
     <ul>
       <li><a href="/" class={currentPath === '/' ? 'active' : undefined}>画廊</a></li>
-      <li><a href="/album" class={currentPath === '/album' ? 'active' : undefined}>专辑</a></li>
-      <li><a href="/video" class={currentPath === '/video' ? 'active' : undefined}>视频</a></li>
-      <li><a href="/about" class={currentPath === '/about' ? 'active' : undefined}>关于</a></li>
+      <li><a href="/album" class={currentPath.startsWith('/album') ? 'active' : undefined}>专辑</a></li>
+      <li><a href="/video" class={currentPath.startsWith('/video') ? 'active' : undefined}>视频</a></li>
+      <li><a href="/about" class={currentPath.startsWith('/about') ? 'active' : undefined}>关于</a></li>
     </ul>
   </nav>
 </header>
