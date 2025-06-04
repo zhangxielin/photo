@@ -1,32 +1,20 @@
 ---
 import { getCollection } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
 import Header from '../components/Header.astro';
 
-// 获取所有图片的 Markdown 文件 经过验证，这个排序是有效的。
 const photos = await getCollection('gallery');
 
-// 分类处理函数
+// 最新排序
+const sortedPhotos = [...photos].sort((a, b) =>
+  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
 
-
-const getLatestPhotos = (photos: CollectionEntry<'gallery'>[]) => {
-  return [...photos].sort((a, b) => 
-    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
-  );
-};
-
-const sortedPhotos = getLatestPhotos(photos);
-
-const getRandomPhotos = (photos) => {
-  return [...photos].sort(() => Math.random() - 0.5);
-};
-
-const getFeaturedPhotos = (photos) => {
-  return photos.filter((photo) => photo.data.featured === true);
-};
-
-// 默认展示“最新”分类的照片 经过验证，这个排序是有效的。
-let filteredPhotos = getLatestPhotos(photos);
+const photoData = sortedPhotos.map(photo => ({
+  title: photo.data.title,
+  description: photo.data.description,
+  image: photo.data.image,
+  date: new Date(photo.data.date).toISOString().slice(0, 10)
+}));
 ---
 
 <html lang="zh">
@@ -41,95 +29,114 @@ let filteredPhotos = getLatestPhotos(photos);
     <main>
       <div class="gallery-header">
         <h2>我的画廊</h2>
-        <!-- 切换布局按钮 -->
         <div class="layout-toggle">
-          <button data-layout="small">小图模式</button>
+          <button data-layout="small" class="active">小图模式</button>
           <button data-layout="large">大图模式</button>
         </div>
       </div>
-      <!-- 二级分类导航 -->
-      <div class="category-nav">
-        <button data-filter="latest">最新</button>
-        <button data-filter="random">随机</button>
-        <button data-filter="featured">精选</button>
-      </div>
 
-      <!-- 展示图片列表 -->
       <div class="photo-list small-layout" id="photo-list">
-        <!-- 初始为空，JS 加载时填充 -->
+        <!-- 初始为空，JS 分页加载 -->
       </div>
-    </main>
+      </main>
 
-    <footer>
-      <p>版权所有 © {new Date().getFullYear()}</p>
-    </footer>
+ <!--  <footer>
+    <p>版权所有 © {new Date().getFullYear()}</p>
+  </footer> -->
+<!-- 图像查看浮层 -->
+<div id="overlay" class="overlay hidden">
+  <div class="overlay-content">
+    <button class="close-button" aria-label="关闭">✕</button>
+    <img id="overlay-image" alt="" />
+    <div class="photo-meta">
+      <h3 id="overlay-title"></h3>
+      <p id="overlay-description"></p>
+      <p id="overlay-date"></p>
+    </div>
+  </div>
+</div>
 
-    <script define:vars={{ photosJSON: JSON.stringify(photos) }}>
-  const photoList = document.getElementById('photo-list');
-  const layoutButtons = document.querySelectorAll('.layout-toggle button');
-  const filterButtons = document.querySelectorAll('.category-nav button');
+<script type="application/json" id="photo-data" set:html={JSON.stringify(photoData)}></script>
+<script type="module">
+  console.log('✅ JS 脚本已开始执行');
+  const allPhotos = JSON.parse(document.getElementById('photo-data').textContent);
+    let photoList = document.getElementById('photo-list');
+    let layoutButtons = document.querySelectorAll('.layout-toggle button');
+    let page = 0;
+    const pageSize = 4;
 
-   // 切换布局
-  layoutButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const layout = button.getAttribute('data-layout');
-      photoList.className = `photo-list ${layout}-layout`;
+    function renderNextPage() {
+      const start = page * pageSize;
+      const end = start + pageSize;
+      const photos = allPhotos.slice(start, end);
 
-      layoutButtons.forEach(btn => btn.classList.remove('active'));
-      button.classList.add('active');
+      photos.forEach((photo) => {
+        const item = document.createElement('div');
+        item.className = 'photo-item';
+        item.innerHTML = `
+          <img src="${photo.image}" alt="${photo.title}" class="photo-thumbnail" />
+          <div class="photo-description">
+            <h3>${photo.title}</h3>
+            <p>${photo.description}</p>
+            <p>${photo.date}</p>
+          </div>
+        `;
+        photoList.appendChild(item);
+      });
+
+      page++;
+    }
+
+    renderNextPage();
+
+    window.addEventListener('scroll', () => {
+      const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
+      if (nearBottom && page * pageSize < allPhotos.length) {
+        renderNextPage();
+      }
+    });
+
+// 处理图片点击查看大图
+// 绑定图片点击弹出浮层
+function bindOverlayHandlers() {
+  document.querySelectorAll('.photo-item img').forEach((img, index) => {
+    img.addEventListener('click', () => {
+      const photo = allPhotos[index];
+      document.getElementById('overlay-image').src = photo.image;
+      document.getElementById('overlay-title').textContent = photo.title;
+      document.getElementById('overlay-description').textContent = photo.description;
+      document.getElementById('overlay-date').textContent = photo.date;
+      document.getElementById('overlay').classList.remove('hidden');
     });
   });
-
-  // 加载数据并更新 DOM
-  async function fetchPhotos(filter) {
-    try {
-      const res = await fetch(`/api/photos.json?filter=${filter}`);
-      const data = await res.json();
-      updatePhotoList(data);
-    } catch (err) {
-      console.error('加载图片失败', err);
-    }
-  }
-
-  function updatePhotoList(photos) {
-  photoList.innerHTML = photos.map((photo) => `
-    <div class="photo-item">
-      <img src="${photo.image}" alt="${photo.title}" class="photo-thumbnail" />
-      <div class="photo-description">
-        <h3>${photo.title}</h3>
-        <p>${photo.description}</p>
-        <p>${photo.date}</p>
-      </div>
-    </div>
-  `).join('');
 }
 
+// 每次分页渲染后调用
+renderNextPage();
+bindOverlayHandlers();
 
-  // 初始化加载默认分类
-  fetchPhotos('latest');
+// 关闭浮层功能
+document.querySelector('.close-button').addEventListener('click', () => {
+  document.getElementById('overlay').classList.add('hidden');
+});
 
-  // 分类按钮点击事件
-  filterButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const filter = button.getAttribute('data-filter');
-      fetchPhotos(filter);
-    });
-  });
+// ESC 键关闭
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.getElementById('overlay').classList.add('hidden');
+  }
+});
 
-  layoutButtons.forEach((button) => {
+
+
+layoutButtons.forEach((button) => {
   button.addEventListener('click', () => {
     const layout = button.getAttribute('data-layout');
     photoList.className = `photo-list ${layout}-layout`;
-
-    // 先移除所有按钮的 active 类
     layoutButtons.forEach(btn => btn.classList.remove('active'));
-    // 给当前点击的按钮添加 active 类
     button.classList.add('active');
+    });
   });
-});
- 
-
-  
 </script>
-  </body>
+</body>
 </html>
