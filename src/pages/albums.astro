@@ -1,0 +1,163 @@
+---
+import { getCollection } from 'astro:content';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const albums = await getCollection('albums');
+const photos = await getCollection('gallery');
+
+type PhotoItem = {
+  title: string;
+  description: string;
+  image: string;
+  date: string;
+};
+
+const viewId = Astro.url.searchParams.get('view');
+let selectedAlbum = null;
+if (viewId) {
+  selectedAlbum = albums.find(album => album.id === viewId);
+}
+
+const sortedAlbums = albums
+  .filter(album => album.data.date)
+  .sort((a, b) =>
+    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  );
+
+let photoData: PhotoItem[] = [];
+
+if (selectedAlbum) {
+  photoData = photos
+    .filter(photo => {
+      const a = photo.data.albums;
+      return Array.isArray(a) ? a.includes(selectedAlbum.id) : a === selectedAlbum.id;
+    })
+    .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+    .map(photo => ({
+      title: photo.data.title,
+      description: photo.data.description,
+      image: photo.data.image,
+      date: new Date(photo.data.date).toISOString().slice(0, 10),
+    }));
+}
+---
+
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{selectedAlbum ? `${selectedAlbum.data.title} - 我的摄影作品` : '摄影专辑 - 我的摄影作品'}</title>
+    <link rel="stylesheet" href="/global.css" />
+  </head>
+  <body>
+    <Header />
+    <main class="albumscontainer">
+      {selectedAlbum ? (
+        
+          <a href="/albums" style="display:inline-block;margin-bottom:1rem;">← 返回所有专辑</a>
+          <h2>{selectedAlbum.data.title}</h2>
+          <p>{selectedAlbum.data.description}</p>
+
+          <div class="photo-list small-layout" id="photo-list"></div>
+
+          <script type="application/json" id="photo-data" set:html={JSON.stringify(photoData)}></script>
+          <script type="module">
+            const allPhotos = JSON.parse(document.getElementById('photo-data').textContent);
+            const photoList = document.getElementById('photo-list');
+            let page = 0;
+            const pageSize = 20;
+
+            function renderNextPage() {
+              const start = page * pageSize;
+              const end = start + pageSize;
+              const photos = allPhotos.slice(start, end);
+
+              photos.forEach(photo => {
+                const item = document.createElement('div');
+                item.className = 'photo-item';
+
+                const img = document.createElement('img');
+                img.src = photo.image;
+                img.alt = photo.title;
+                img.className = 'photo-thumbnail';
+
+                img.addEventListener('click', () => {
+                  document.getElementById('overlay-image').src = photo.image;
+                  document.getElementById('overlay-title').textContent = photo.title;
+                  document.getElementById('overlay-description').textContent = photo.description;
+                  document.getElementById('overlay-date').textContent = photo.date;
+                  document.getElementById('overlay').classList.remove('hidden');
+                });
+
+                const desc = document.createElement('div');
+                desc.className = 'photo-description';
+                desc.innerHTML = `
+                  <h3>${photo.title}</h3>
+                  <p>${photo.description}</p>
+                  <p>${photo.date}</p>
+                `;
+
+                item.appendChild(img);
+                item.appendChild(desc);
+                photoList.appendChild(item);
+              });
+
+              page++;
+            }
+
+            renderNextPage();
+
+            window.addEventListener('scroll', () => {
+              const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
+              if (nearBottom && page * pageSize < allPhotos.length) {
+                renderNextPage();
+              }
+            });
+
+            document.querySelector('.close-button').addEventListener('click', () => {
+              document.getElementById('overlay').classList.add('hidden');
+            });
+
+            window.addEventListener('keydown', (e) => {
+              if (e.key === 'Escape') {
+                document.getElementById('overlay').classList.add('hidden');
+              }
+            });
+          </script>
+
+          <div id="overlay" class="overlay hidden">
+            <div class="overlay-content">
+              <button class="close-button" aria-label="关闭">✕</button>
+              <img id="overlay-image" alt="" />
+              <div class="photo-meta">
+                <h3 id="overlay-title"></h3>
+                <p id="overlay-description"></p>
+                <p id="overlay-date"></p>
+              </div>
+            </div>
+          </div>
+        
+      ) : (
+        <>
+          <h2>摄影专辑</h2>
+          <p>每个专辑代表一次完整的旅程与回忆。</p>
+
+          <div class="album-grid">
+            {sortedAlbums.map(album => (
+              <a class="album-card" href={`/albums/${album.data.path}`}>
+                <img src={album.data.coverImage} alt={album.data.title} />
+                <div class="album-info">
+                  <h3>{album.data.title}</h3>
+                  <p>{album.data.description}</p>
+                  <small>{new Date(album.data.date).toLocaleDateString()}</small>
+                </div>
+              </a>
+            ))}
+          </div>
+        </>
+      )}
+    </main>
+    <Footer />
+  </body>
+</html>

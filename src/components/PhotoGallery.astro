@@ -1,0 +1,107 @@
+---
+const { photoData } = Astro.props;
+export interface Props {
+  photoData: {
+    title: string;
+    description: string;
+    image: string;
+    date: string;
+  }[];
+}
+
+
+---
+
+
+
+<div class="photo-list small-layout" id="photo-list"></div>
+
+<!-- 浮层查看大图 -->
+<div id="overlay" class="overlay hidden">
+  <div class="overlay-content">
+    <button class="close-button" aria-label="关闭">✕</button>
+    <img id="overlay-image" alt="" />
+    <div class="photo-meta">
+      <h3 id="overlay-title"></h3>
+      <p id="overlay-description"></p>
+      <p id="overlay-date"></p>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" id="photo-data" set:html={JSON.stringify(photoData)}></script>
+
+<script type="module">
+  const allPhotos = JSON.parse(document.getElementById('photo-data').textContent);
+  const photoList = document.getElementById('photo-list');
+  const layoutButtons = document.querySelectorAll('.layout-toggle button');
+
+  let page = 0;
+  const pageSize = 4;
+
+  function renderNextPage() {
+    const start = page * pageSize;
+    const end = start + pageSize;
+    const photos = allPhotos.slice(start, end);
+
+    photos.forEach((photo) => {
+      const item = document.createElement('div');
+      item.className = 'photo-item';
+
+      const img = document.createElement('img');
+      img.src = photo.image;
+      img.alt = photo.title;
+      img.className = 'photo-thumbnail';
+
+      img.addEventListener('click', () => {
+        document.getElementById('overlay-image').src = photo.image;
+        document.getElementById('overlay-title').textContent = photo.title;
+        document.getElementById('overlay-description').textContent = photo.description;
+        document.getElementById('overlay-date').textContent = photo.date;
+        document.getElementById('overlay').classList.remove('hidden');
+      });
+
+      const desc = document.createElement('div');
+      desc.className = 'photo-description';
+      desc.innerHTML = `
+        <h3>${photo.title}</h3>
+        <p>${photo.description}</p>
+        <p>${photo.date}</p>
+      `;
+
+      item.appendChild(img);
+      item.appendChild(desc);
+      photoList.appendChild(item);
+    });
+
+    page++;
+  }
+
+  renderNextPage();
+
+  window.addEventListener('scroll', () => {
+    const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
+    if (nearBottom && page * pageSize < allPhotos.length) {
+      renderNextPage();
+    }
+  });
+
+  layoutButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const layout = button.getAttribute('data-layout');
+      photoList.className = `photo-list ${layout}-layout`;
+      layoutButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+    });
+  });
+
+  document.querySelector('.close-button').addEventListener('click', () => {
+    document.getElementById('overlay').classList.add('hidden');
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.getElementById('overlay').classList.add('hidden');
+    }
+  });
+</script>

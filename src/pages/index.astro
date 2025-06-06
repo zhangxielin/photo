@@ -66,26 +66,44 @@ const photoData = sortedPhotos.map(photo => ({
     const pageSize = 4;
 
     function renderNextPage() {
-      const start = page * pageSize;
-      const end = start + pageSize;
-      const photos = allPhotos.slice(start, end);
+  const start = page * pageSize;
+  const end = start + pageSize;
+  const photos = allPhotos.slice(start, end);
 
-      photos.forEach((photo) => {
-        const item = document.createElement('div');
-        item.className = 'photo-item';
-        item.innerHTML = `
-          <img src="${photo.image}" alt="${photo.title}" class="photo-thumbnail" />
-          <div class="photo-description">
-            <h3>${photo.title}</h3>
-            <p>${photo.description}</p>
-            <p>${photo.date}</p>
-          </div>
-        `;
-        photoList.appendChild(item);
-      });
+  photos.forEach((photo) => {
+    const item = document.createElement('div');
+    item.className = 'photo-item';
 
-      page++;
-    }
+    const img = document.createElement('img');
+    img.src = photo.image;
+    img.alt = photo.title;
+    img.className = 'photo-thumbnail';
+
+    // ✅ 点击图片弹出大图浮层（绑定在此处，确保每张图都绑定）
+    img.addEventListener('click', () => {
+      document.getElementById('overlay-image').src = photo.image;
+      document.getElementById('overlay-title').textContent = photo.title;
+      document.getElementById('overlay-description').textContent = photo.description;
+      document.getElementById('overlay-date').textContent = photo.date;
+      document.getElementById('overlay').classList.remove('hidden');
+    });
+
+    const desc = document.createElement('div');
+    desc.className = 'photo-description';
+    desc.innerHTML = `
+      <h3>${photo.title}</h3>
+      <p>${photo.description}</p>
+      <p>${photo.date}</p>
+    `;
+
+    item.appendChild(img);
+    item.appendChild(desc);
+    photoList.appendChild(item);
+  });
+
+  page++;
+}
+
 
     renderNextPage();
 
@@ -99,16 +117,16 @@ const photoData = sortedPhotos.map(photo => ({
 // 处理图片点击查看大图
 // 绑定图片点击弹出浮层
 function bindOverlayHandlers() {
-  document.querySelectorAll('.photo-item img').forEach((img, index) => {
-    img.addEventListener('click', () => {
-      const photo = allPhotos[index];
-      document.getElementById('overlay-image').src = photo.image;
-      document.getElementById('overlay-title').textContent = photo.title;
-      document.getElementById('overlay-description').textContent = photo.description;
-      document.getElementById('overlay-date').textContent = photo.date;
-      document.getElementById('overlay').classList.remove('hidden');
-    });
-  });
+  // 绑定关闭按钮和 ESC 键（只需要运行一次）
+document.querySelector('.close-button').addEventListener('click', () => {
+  document.getElementById('overlay').classList.add('hidden');
+});
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    document.getElementById('overlay').classList.add('hidden');
+  }
+});
 }
 
 // 每次分页渲染后调用

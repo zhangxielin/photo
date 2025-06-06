@@ -46,3 +46,24 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+## 使用说明
+### 添加照片
+在src/content/gallery下新增一个md文件，文件里的
+title是照片标题，
+description是照片描述
+image是图片路径
+date是上传日期
+featured是否为精选
+albums是所属专辑
+
+### 新增专辑
+在src/content/albums下新增一个md文件，文件里的
+title是专辑名称
+description是专辑描述
+coverImage是转接封面
+date是专辑建立日期
+featured暂时未用上
+
+在src/albums下新增同名的astro文件，可以复制同目录下其他文件的代码，但需要注意把其中头部的3处地方要修改成md同名。
+

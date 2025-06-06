@@ -7,9 +7,11 @@ const albumsCollection = defineCollection({
     description: z.string(),
     coverImage: z.string(),
     date: z.date(),
-    Featured: z.boolean().default(false),
+    path: z.string(), // ✅ 替代 slug
+    featured: z.boolean().default(false)
   }),
 });
+
 
 const galleryCollection = defineCollection({
   type: 'content',
@@ -19,15 +21,21 @@ const galleryCollection = defineCollection({
     image: z.string(),
     date: z.date(),
     featured: z.boolean().default(false),
+    albums: z.union([
+      z.string(),
+      z.array(z.string())
+    ]).optional(), // ✅ 可为单个专辑或多个专辑
   }),
 });
 
 const pages = defineCollection({
-  type: 'content', // ✅ 添加这行！
+  type: 'content', 
   schema: z.object({
     title: z.string(),
   }),
 });
+
+
 
 export const collections = {
   albums: albumsCollection,
