@@ -7,7 +7,7 @@ const albumsCollection = defineCollection({
     description: z.string(),
     coverImage: z.string(),
     date: z.date(),
-    path: z.string(), // ✅ 替代 slug
+    slug: z.string().optional(),  // ✅ 不再强制所有 .md 文件都必须有 slug
     featured: z.boolean().default(false)
   }),
 });
