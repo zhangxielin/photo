@@ -145,7 +145,7 @@ if (selectedAlbum) {
 
           <div class="album-grid">
             {sortedAlbums.map(album => (
-              <a class="album-card" href={`/albums/${album.data.path}`}>
+              <a class="album-card" href={`/albums/${album.slug}`}>
                 <img src={album.data.coverImage} alt={album.data.title} />
                 <div class="album-info">
                   <h3>{album.data.title}</h3>
