@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PhotoGallery from '../../components/PhotoGallery.astro';
+
+const albums = await getCollection('albums');
+const album = albums.find(a => a.slug === 'fujian');//请务必修改为专辑的md文件名
+
+const photos = await getCollection('gallery');
+
+if (!album) {
+  throw new Error('未找到专辑：fujian');//请务必修改为专辑的md文件名
+}
+
+const photoData = photos
+  .filter(photo => {
+    const a = photo.data.albums;
+    return Array.isArray(a) ? a.includes('fujian') : a === 'fujian';//请务必修改为专辑的md文件名
+  })
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .map(photo => ({
+    title: photo.data.title,
+    description: photo.data.description,
+    image: photo.data.image,
+    date: new Date(photo.data.date).toISOString().slice(0, 10),
+  }));
+---
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{album.data.title} - 我的摄影作品</title>
+    <link rel="stylesheet" href="/global.css" />
+  </head>
+  <body>
+    <Header />
+
+    <main class="albumscontainer">
+        <div class="section-header">
+            <a href="/albums" class="back-button">← 返回专辑列表</a>
+            <div class="gallery-header">
+                <h2>{album.data.title}</h2>
+                <!--<p>{album.data.description}</p>-->
+                <div class="layout-toggle">
+                    <button data-layout="small" class="active">小图模式</button>
+                    <button data-layout="large">大图模式</button>
+                </div>
+            </div>
+        </div>
+        <PhotoGallery photoData={photoData} />
+      </div>
+      
+
+ 
+    </main>
+
+    <Footer />
+
+ 
+  </body>
+</html>

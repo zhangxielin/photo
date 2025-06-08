@@ -92,6 +92,12 @@ main {
   line-height: 1.6;
 }
 
+.small-layout .photo-description p {
+  max-height: 3em; /* 限制描述的最大高度 */ 
+  overflow: hidden;        /* 隐藏溢出内容 */
+  text-overflow: ellipsis; /* 超出部分显示省略号 */
+}
+
 /* 小图模式样式 */
 .photo-list.small-layout {
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* 每行3-4个图 */
