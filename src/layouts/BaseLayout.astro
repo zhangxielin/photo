@@ -1,0 +1,26 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  children: any;
+}
+
+const {
+  title = 'ChaChaPhoto - 我的摄影作品集',
+  description = '这是我的摄影作品集，记录旅行与光影。',
+  keywords = '摄影, 旅行, 风景, 光影',
+  children 
+} = Astro.props;
+---
+
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <link rel="stylesheet" href="/global.css" />
+  </head>
+  

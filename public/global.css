@@ -186,6 +186,11 @@ nav ul li a {
   text-decoration: none;
 }
 
+nav ul li a:hover {
+  color: #ffcb00;
+  text-decoration: none;
+}
+
 nav ul li a.active {
   font-weight: bold;
   color: #ffcb00; /* 你喜欢的高亮色 */
