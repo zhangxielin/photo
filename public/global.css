@@ -6,6 +6,7 @@ body {
   background-color: #f5f5f5;
 }
 
+
 h1 {
   font-size: 2rem;
   color: #333;
@@ -20,11 +21,15 @@ h2 {
   margin-top: 20px;
 }
 
+
+
 h2 span.totle {
   color: #666;
   font-size: 1rem;
   font-weight: 500; /* 你喜欢的高亮色 */
 }
+
+
 
 .layout-toggle {
   display: flex;
@@ -170,6 +175,8 @@ header {
   flex-direction: row;
 }
 
+
+
 header h1 {
   background: url("logo.png") no-repeat;
   background-size: cover;
@@ -178,8 +185,8 @@ header h1 {
   display: inlie-block;
   width: 200px;
   height: 50px;
-
 }
+
 
 header h1 span {
   display: none;
@@ -298,6 +305,8 @@ nav ul li a.active {
         height: 100%;
       }
 
+
+
 .album-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
@@ -322,11 +331,17 @@ nav ul li a.active {
         color: #222;
       }
 
+
+
 .album-info p {
         font-size: 0.95rem;
         color: #555;
         flex-grow: 1;
       }
+
+
+
+
 .album-info small {
         color: #999;
         font-size: 0.8rem;
@@ -350,4 +365,66 @@ nav ul li a.active {
   background-color: #e0e0e0;
   border-color: #aaa;
   color: #000;
+}
+
+
+/* 深色主题 */
+@media (prefers-color-scheme: dark) {
+  .album-card {
+    background-color: #313131;
+  }
+
+  .photo-item {
+    background-color: #313131;
+  }
+
+  .photo-description h3 {
+    color: #e8e8e8;
+  }
+
+  .photo-description p {
+    color: #ccc;
+  }
+
+  .album-info h3 {
+    color: #e8e8e8;
+  }
+
+  .album-info p {
+    color: #ccc;
+  } 
+
+  h2 {
+    color: #ffffff;
+  }
+
+
+  body {
+    background-color: #252525;
+    color: #eee;
+  }
+
+  h2 span.totle {
+    color: #cacaca;
+  }
+
+  .back-button {
+  display: inline-block;
+  padding: 0.4em 1em;
+  margin-bottom: 1.2rem;
+  border: 1px solid #505050;
+  border-radius: 6px;
+  text-decoration: none;
+  background-color: #333;
+  color: #fff;
+  font-size: 0.95rem;
+  transition: all 0.2s ease-in-out;
+  }
+
+  .back-button:hover {
+  background-color: #555;
+  border: 1px solid #727272;
+  color: #fff;
+  }
+  
 }
