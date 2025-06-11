@@ -374,7 +374,11 @@ nav ul li a.active {
     background-color: #313131;
   }
 
-  .photo-item {
+  .large-layout .photo-item {
+    background-color: #313131;
+  }
+
+   .small-layout .photo-item {
     background-color: #313131;
   }
 
