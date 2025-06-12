@@ -283,6 +283,11 @@ nav ul li a.active {
   padding: 20px;
 }
 
+.aboutcontainer img {
+  width: 133px;
+  border-radius: 8px;
+}
+
 /* 专辑列表样式 */
 .alblumscontainer {
   max-width: 1200px;

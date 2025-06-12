@@ -3,6 +3,7 @@ title: 关于我
 ---
 
 ## 你好，我是ChaCha🍵！
+![Chacha的照片](http://photo.chachaphoto.uk/chacha.jpg "ChaCha")
 
 风光摄影爱好者，以下摄影类题材的喜爱程度暂不分先后：
 
