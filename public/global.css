@@ -164,6 +164,9 @@ main {
   .photo-description p {
     font-size: 0.9rem; /* 在手机屏幕上减小描述字体 */
   }
+  .photo-list.small-layout {
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* 每行3-4个图 */
+}
 }
 
 header {
@@ -172,6 +175,7 @@ header {
   padding: 10px 0;
   text-align: left;
   display: flex;
+  flex-wrap: wrap; /* 允许换行 */
   flex-direction: row;
 }
 
@@ -184,6 +188,7 @@ header h1 {
   margin: 0;
   display: inlie-block;
   width: 200px;
+  min-width: 200px;
   height: 50px;
 }
 
