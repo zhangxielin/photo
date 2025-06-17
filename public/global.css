@@ -358,10 +358,10 @@ nav ul li a.active {
         margin-top: 0.5rem;
       }
 
-.back-button {
+.back-button, .order {
   display: inline-block;
   padding: 0.4em 1em;
-  margin-bottom: 1.2rem;
+  /* margin-bottom: 1.2rem; */
   border: 1px solid #ccc;
   border-radius: 6px;
   text-decoration: none;
@@ -371,7 +371,7 @@ nav ul li a.active {
   transition: all 0.2s ease-in-out;
 }
 
-.back-button:hover {
+.back-button:hover, .order:hover {
   background-color: #e0e0e0;
   border-color: #aaa;
   color: #000;

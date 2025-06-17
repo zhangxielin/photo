@@ -7,9 +7,9 @@ import { getGalleryCount } from '../utils/gallery.ts';
 const photoCount = getGalleryCount();
 const photos = await getCollection('gallery');
 
-// 最新排序
+// 最旧排序
 const sortedPhotos = [...photos].sort((a, b) =>
-  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  new Date(a.data.date).getTime() - new Date(b.data.date).getTime()
 );
 
 const photoData = sortedPhotos.map(photo => ({
@@ -30,7 +30,7 @@ const photoData = sortedPhotos.map(photo => ({
       <div class="gallery-header">
         <h2>我的画廊<span class="totle">（本站已有 {photoCount} 张照片）</span></h2>
         <div class="layout-toggle">
-          <a href="older" class="order">从旧到新</a>
+          <a href="/" class="order">从新到旧</a>
           <button data-layout="small" class="active">小图模式</button>
           <button data-layout="large">大图模式</button>
         </div>
