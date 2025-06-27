@@ -33,4 +33,6 @@ title: 关于我
 
 伊犁，是下一个目的地
 
-本网站的建立，离不开**ChatGPT**、**Astro**、**CloudFlare**、**Visual Studio Code**的免费支持。
+本网站的建立，离不开**ChatGPT**、**Astro**、**CloudFlare**、**Visual Studio Code**、**GitHub**的免费支持。
+
+特别感谢**婉芸**带我走入摄影的世界，感谢家属**一秒炸**、**父母**的支持。
