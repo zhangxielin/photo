@@ -1,1 +1,36 @@
-under construction
+---
+import { getCollection } from 'astro:content';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Layout from '../layouts/BaseLayout.astro';
+
+const topics = await Astro.glob('../pages/video/*.astro');
+const sortedTopics = topics
+  .map(t => ({ url: t.url, ...(t as any).frontmatter }))
+  .sort((a, b) => a.order - b.order);
+---
+
+<Layout>1</Layout>
+<body>
+    <Header />
+    <main class="container">
+        <h2>📺 视频专辑</h2>
+        <p>每个专题一页，深度呈现</p>
+        <div class="album-grid">
+          {
+             sortedTopics.map(topic => (
+         
+            <a class="album-card" href={topic.url}>
+              <img src={topic.cover} alt={topic.title} />
+              <div class="album-info">
+                <h3>{topic.title}</h3>
+                <p>{topic.description}</p>
+              </div>
+            </a>
+        
+        ))
+      }
+         </div>
+        </main>
+    <Footer/>
+</body>

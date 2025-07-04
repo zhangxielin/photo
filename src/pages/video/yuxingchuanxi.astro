@@ -1,0 +1,73 @@
+---
+import { getCollection } from 'astro:content';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Layout from '../../layouts/BaseLayout.astro';
+
+export const frontmatter = {
+  title: "雨行川西",
+  description: "在雨季，勇闯川西。川西的大环线和小环线经过综合考虑之后而成行，带你走遍卧龙、四姑娘山长坪沟、夹金山、新都桥、塔公草原、折多山、康定、G318、雅安、理塘、姊妹湖、理亚路、稻城亚丁、石河公园、毛娅大草原、无量河湿地。",
+  cover: "http://photo.chachaphoto.uk/maobiliang.jpg", // 放在 /public/covers 目录
+  order: 1
+};
+
+const videos = [
+  {
+    title: "雨行川西-第1集",
+    description: "一场辞职旅行，在青甘大环线还没有成为热门线路之前，我们带上相机走了一圈。作为回顾，我重新做了很多关于地理历史相关的学习和研究，在图文游记的基础上制作了系列视频。",
+    bilibiliUrl: "https://player.bilibili.com/player.html?isOutside=true&aid=382327788&bvid=BV19Z4y1z7So&cid=551450943&p=1&autoplay=0"
+  },
+  {
+    title: "雨行川西-第2集",
+    description: "一场辞职旅行，在青甘大环线还没有成为热门线路之前，我们带上相机走了一圈。作为回顾，我重新做了很多关于地理历史相关的学习和研究，在图文游记的基础上制作了系列视频。",
+    bilibiliUrl: "https://player.bilibili.com/player.html?isOutside=true&aid=767473393&bvid=BV1jr4y1q7dm&cid=555418403&p=1&autoplay=0"
+  },
+  {
+    title: "雨行川西-第3集",
+    description: "一场辞职旅行，在青甘大环线还没有成为热门线路之前，我们带上相机走了一圈。作为回顾，我重新做了很多关于地理历史相关的学习和研究，在图文游记的基础上制作了系列视频。",
+    bilibiliUrl: "https://player.bilibili.com/player.html?isOutside=true&aid=255043861&bvid=BV1GY411H7vv&cid=556501017&p=1&autoplay=0"
+  },
+  {
+    title: "雨行川西-第4集",
+    description: "一场辞职旅行，在青甘大环线还没有成为热门线路之前，我们带上相机走了一圈。作为回顾，我重新做了很多关于地理历史相关的学习和研究，在图文游记的基础上制作了系列视频。",
+    bilibiliUrl: "https://player.bilibili.com/player.html?isOutside=true&aid=725028447&bvid=BV1FS4y1S7nb&cid=557935597&p=1&autoplay=0"
+  },
+  {
+    title: "雨行川西-第5集",
+    description: "一场辞职旅行，在青甘大环线还没有成为热门线路之前，我们带上相机走了一圈。作为回顾，我重新做了很多关于地理历史相关的学习和研究，在图文游记的基础上制作了系列视频。",
+    bilibiliUrl: "https://player.bilibili.com/player.html?isOutside=true&aid=640059831&bvid=BV1iY4y1s7cz&cid=559687299&p=1&autoplay=0"
+  },
+  // 继续添加更多视频项...
+];
+---
+
+
+
+<Layout>1</Layout>
+<body>
+    <Header />
+    <main class="container">
+        <a href="/video" class="back-button">← 返回专辑列表</a>
+        <h2>📺 视频作品</h2>
+        <p>包含了我的所有vlog和延时摄影。</p>
+        <div class="grid">
+             {
+                videos.map(video => (
+                    <section style="width: 100%;margin-bottom:5rem">
+                    <h3>{video.title}</h3>
+                    <p>{video.description}</p>
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 0.5rem;">
+                        <iframe 
+                        src={video.bilibiliUrl} 
+                        allowfullscreen="true"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                        >
+                        </iframe>
+                    </div>
+                    </section>
+                ))
+             }
+         </div>
+        </main>
+    <Footer/>
+</body>

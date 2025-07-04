@@ -4,7 +4,7 @@ description: "2019年国庆节，我独自驾车去兴坪，这是我第一次�
 image: http://photo.chachaphoto.uk/lijiangdiyiwan.jpg
 featured: true
 date: 2019-10-04
-albums: hunan
+albums: guangxi
 ---
 
 ## This is the full description of the photo.
