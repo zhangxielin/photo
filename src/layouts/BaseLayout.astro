@@ -3,14 +3,14 @@ export interface Props {
   title?: string;
   description?: string;
   keywords?: string;
-  children: any;
+  //children: any;
 }
 
 const {
-  title = 'ChaChaPhoto - 我的摄影作品集',
-  description = 'ChaCha的摄影画廊，这是我的摄影作品集，记录旅行与光影。',
-  keywords = '摄影, 旅行, 风景, 光影',
-  children 
+  title = '中国风景摄影 | ChaChaPhoto - Travel Landscape Photography in China',
+  description = 'ChaCha 的旅行与风景摄影作品集，记录中国的自然风光、城市街拍与文化影像。Explore stunning landscapes, street photography, and travel moments across China.',
+  keywords = '摄影, 旅行, 风景, 中国风光, 城市街拍, Landscape Photography, Travel Photography, China, Street Photography, Nature, Culture',
+  //children 
 } = Astro.props;
 ---
 
@@ -23,5 +23,17 @@ const {
     <meta name="keywords" content={keywords} />
     <link rel="stylesheet" href="/global.css" />
     <link rel="shortcut icon" href="/favicon.ico">
-  </head>
   
+  </head>
+  <body>
+    <slot />
+    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+<script is:inline>
+  kofiWidgetOverlay.draw('chachaphoto', {
+    'type': 'floating-chat',
+    'floating-chat.donateButton.text': 'Support me',
+    'floating-chat.donateButton.background-color': '#fcbf47',
+    'floating-chat.donateButton.text-color': '#323842'
+  });
+</script>
+</body>
