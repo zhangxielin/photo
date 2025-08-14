@@ -31,7 +31,10 @@ const {
    <!-- Ko-fi Widget -->
 <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
 <script is:inline>
-  window.addEventListener('load', function () {
+  // 创建脚本标签动态加载 Ko-fi
+  const kofiScript = document.createElement('script');
+  kofiScript.src = 'https://storage.ko-fi.com/cdn/scripts/overlay-widget.js';
+  kofiScript.onload = () => {
     if (typeof kofiWidgetOverlay !== 'undefined') {
       kofiWidgetOverlay.draw('chachaphoto', {
         'type': 'floating-chat',
@@ -40,9 +43,13 @@ const {
         'floating-chat.donateButton.text-color': '#323842'
       });
     } else {
-      console.error('Ko-fi widget script not loaded.');
+      console.error('Ko-fi widget loaded but kofiWidgetOverlay is undefined.');
     }
-  });
+  };
+  kofiScript.onerror = () => {
+    console.error('Failed to load Ko-fi widget script.');
+  };
+  document.body.appendChild(kofiScript);
 </script>
 
   </body>
