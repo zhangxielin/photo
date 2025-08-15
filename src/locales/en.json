@@ -1,0 +1,17 @@
+{
+    "index.title": "My Gallery",
+    "index.photos_count":"Total photos:",
+    "index.order":"New to Old",
+    "older.order":"Old to New",
+    "large_view": "Large View",
+    "small_view": "Small View",
+    "nav.gallery": "Gallery",
+    "nav.albums": "Albums",
+    "nav.video": "Video",
+    "nav.about": "About",
+    "albums.title": "📷Albums",
+    "albums.subtitle": "Each album represents a complete journey and memory.",
+    "video.title": "📺Video Gallery",
+    "video.subtitle": "Explore my video collection.",
+    "footer.connect": "If you need to purchase copyright or cooperate, please send an email to:"
+}

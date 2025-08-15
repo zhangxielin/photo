@@ -1,13 +1,19 @@
 ---
 const email = "chachaphoto@icloud.com";
 const year = new Date().getFullYear();
+
+import { t } from "../utils/i18n.js";
+// 获取当前语言（可以从 URL、cookie、localStorage 或默认值）
+import { getLang } from "../utils/getLang.ts";
+const lang = getLang();
+
 ---
 
 <footer style="background-color: #111; color: white; padding: 2rem 1rem; margin-top: 3rem;">
   <div style="max-width: 960px; margin: 0 auto; text-align: center;">
-    <p>&copy; {year} Zhang Xielin 版权所有</p>
+    <p>&copy; {year} Zhang Xielin</p>
     <p>
-      有购买版权或合作需求，请发邮件：<a href={`mailto:${email}`} style="color: #4fc3f7;">{email}</a>
+      {t("footer.connect", lang)}<a href={`mailto:${email}`} style="color: #4fc3f7;">{email}</a>
     </p>
   </div>
 </footer>

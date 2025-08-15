@@ -18,9 +18,16 @@ const photoData = sortedPhotos.map(photo => ({
   image: photo.data.image,
   date: new Date(photo.data.date).toISOString().slice(0, 10)
 }));
+
+import { t } from "../utils/i18n.js";
+// 获取当前语言（可以从 URL、cookie、localStorage 或默认值）
+//const lang = Astro.url.searchParams.get("lang") || "en";
+// 先取 URL 参数，再取浏览器语言，最后再 fallback 到 en
+import { getLang } from "../utils/getLang.ts";
+const lang = getLang();
 ---
 
-<html lang="zh">
+
   <Layout>
     
   </Layout>
@@ -28,11 +35,11 @@ const photoData = sortedPhotos.map(photo => ({
     <Header />
     <main>
       <div class="gallery-header">
-        <h2>我的画廊<span class="totle">（本站已有 {photoCount} 张照片）</span></h2>
+        <h2>{t("index.title", lang)}<span class="totle">（{t("index.photos_count", lang)} {photoCount} ）</span></h2>
         <div class="layout-toggle">
-          <a href="older" class="order">从旧到新</a>
-          <button data-layout="small" class="active">小图模式</button>
-          <button data-layout="large">大图模式</button>
+          <a href="older" class="order">{t("index.order", lang)}</a>
+          <button data-layout="small" class="active">{t("small_view", lang)}</button>
+          <button data-layout="large">{t("large_view", lang)}</button>
         </div>
       </div>
 
@@ -156,4 +163,4 @@ layoutButtons.forEach((button) => {
   });
 </script>
 </body>
-</html>
+

@@ -8,14 +8,21 @@ const topics = await Astro.glob('../pages/video/*.astro');
 const sortedTopics = topics
   .map(t => ({ url: t.url, ...(t as any).frontmatter }))
   .sort((a, b) => a.order - b.order);
+
+import { t } from "../utils/i18n.js";
+// 获取当前语言（可以从 URL、cookie、localStorage 或默认值）
+//const lang = Astro.url.searchParams.get("lang") || "en";
+// 先取 URL 参数，再取浏览器语言，最后再 fallback 到 en
+import { getLang } from "../utils/getLang.ts";
+const lang = getLang();
 ---
 
 <Layout></Layout>
 <body>
     <Header />
     <main class="container">
-        <h2>📺 视频</h2>
-        <p>这里是我的系列vlog和短视频。</p>
+        <h2>{t("video.title", lang)}</h2>
+        <p>{t("video.subtitle", lang)}</p>
         <div class="album-grid">
           {
              sortedTopics.map(topic => (

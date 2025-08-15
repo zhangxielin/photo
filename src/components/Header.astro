@@ -1,16 +1,22 @@
 ---
 const currentPath = Astro.url.pathname;
 const isGallery = Astro.url.pathname === '/' || Astro.url.pathname.startsWith('/older');
+import { t } from "../utils/i18n.js";
+// 获取当前语言（可以从 URL、cookie、localStorage 或默认值）
+//const lang = Astro.url.searchParams.get("lang") || "en";
+// 先取 URL 参数，再取浏览器语言，最后再 fallback 到 en
+import { getLang } from "../utils/getLang.ts";
+const lang = getLang();
 ---
 
 <header>
   <h1><span>ChaCha Photo</span></h1>
   <nav>
     <ul>
-      <li><a href="/" class={isGallery ? 'active' : ''}>画廊</a></li>
-      <li><a href="/albums" class={currentPath.startsWith('/albums') ? 'active' : undefined}>专辑</a></li>
-      <li><a href="/video" class={currentPath.startsWith('/video') ? 'active' : undefined}>视频</a></li>
-      <li><a href="/about" class={currentPath.startsWith('/about') ? 'active' : undefined}>关于</a></li>
+      <li><a href="/" class={isGallery ? 'active' : ''}>{t("nav.gallery", lang)}</a></li>
+      <li><a href="/albums" class={currentPath.startsWith('/albums') ? 'active' : undefined}>{t("nav.albums", lang)}</a></li>
+      <li><a href="/video" class={currentPath.startsWith('/video') ? 'active' : undefined}>{t("nav.video", lang)}</a></li>
+      <li><a href="/about" class={currentPath.startsWith('/about') ? 'active' : undefined}>{t("nav.about", lang)}</a></li>
     </ul>
   </nav>
 </header>
