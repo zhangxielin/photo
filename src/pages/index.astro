@@ -162,5 +162,9 @@ layoutButtons.forEach((button) => {
     });
   });
 </script>
+---
+const lang = detectLang(Astro.request.headers);
+---
+<p>检测到语言：{lang}</p>
 </body>
 
