@@ -43,12 +43,6 @@ if (selectedAlbum) {
     }));
 }
 
-import { t } from "../utils/i18n.js";
-// 获取当前语言（可以从 URL、cookie、localStorage 或默认值）
-//const lang = Astro.url.searchParams.get("lang") || "en";
-// 先取 URL 参数，再取浏览器语言，最后再 fallback 到 en
-import { getLang } from "../utils/getLang.ts";
-const lang = getLang();
 ---
 
 
@@ -143,8 +137,8 @@ const lang = getLang();
         
       ) : (
         <> -->
-          <h2>{t("albums.title", lang)}</h2>
-          <p>{t("albums.subtitle", lang)}</p>
+          <h2 data-i18n="albums.title">📷专辑</h2>
+          <p data-i18n="albums.subtitle">每个专辑代表一次完整的旅程与回忆。</p>
 
           <div class="album-grid">
             {sortedAlbums.map(album => (

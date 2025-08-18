@@ -6,8 +6,6 @@ import Footer from '../components/Footer.astro';
 import { getGalleryCount } from '../utils/gallery.ts';
 const photoCount = getGalleryCount();
 const photos = await getCollection('gallery');
-//检测浏览器语言
-const acceptLang = Astro.request.headers.get("accept-language") || "无";
 
 // 最新排序
 const sortedPhotos = [...photos].sort((a, b) =>
@@ -21,12 +19,6 @@ const photoData = sortedPhotos.map(photo => ({
   date: new Date(photo.data.date).toISOString().slice(0, 10)
 }));
 
-import { t } from "../utils/i18n.js";
-// 获取当前语言（可以从 URL、cookie、localStorage 或默认值）
-//const lang = Astro.url.searchParams.get("lang") || "en";
-// 先取 URL 参数，再取浏览器语言，最后再 fallback 到 en
-import { getLang } from "../utils/getLang.ts";
-const lang = getLang();
 ---
 
 
@@ -36,13 +28,12 @@ const lang = getLang();
   <body>
     <Header />
     <main>
-      <p>请求头是;{acceptLang}</p>
       <div class="gallery-header">
-        <h2>{t("index.title", lang)}<span class="totle">（{t("index.photos_count", lang)} {photoCount} ）</span></h2>
+       <h2><span data-i18n="index.title">画廊</span><span class="totle">{photoCount} </span></h2>
         <div class="layout-toggle">
-          <a href="older" class="order">{t("index.order", lang)}</a>
-          <button data-layout="small" class="active">{t("small_view", lang)}</button>
-          <button data-layout="large">{t("large_view", lang)}</button>
+          <a href="older" class="order" data-i18n="index.order">从新到旧</a>
+          <button data-layout="small" class="active" data-i18n="small_view">小图模式</button>
+          <button data-layout="large" data-i18n="large_view">大图模式</button>
         </div>
       </div>
 
@@ -64,6 +55,8 @@ const lang = getLang();
     </div>
   </div>
 </div>
+
+<script src="../../public/locales/lang.js"></script>
 
 <script type="application/json" id="photo-data" set:html={JSON.stringify(photoData)}></script>
 <script type="module">
@@ -165,5 +158,6 @@ layoutButtons.forEach((button) => {
     });
   });
 </script>
+
 </body>
 

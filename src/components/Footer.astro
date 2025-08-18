@@ -2,10 +2,6 @@
 const email = "chachaphoto@icloud.com";
 const year = new Date().getFullYear();
 
-import { t } from "../utils/i18n.js";
-// 获取当前语言（可以从 URL、cookie、localStorage 或默认值）
-import { getLang } from "../utils/getLang.ts";
-const lang = getLang();
 
 ---
 
@@ -13,7 +9,8 @@ const lang = getLang();
   <div style="max-width: 960px; margin: 0 auto; text-align: center;">
     <p>&copy; {year} Zhang Xielin</p>
     <p>
-      {t("footer.connect", lang)}<a href={`mailto:${email}`} style="color: #4fc3f7;">{email}</a>
+      <span data-i18n="footer.connect">如需购买版权或合作，请发送邮件至：</span><a href={'mailto:${email}'} style="color: #4fc3f7;">{email}</a>
     </p>
   </div>
 </footer>
+<script src="../../public/locales/lang.js"></script>

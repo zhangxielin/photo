@@ -9,20 +9,14 @@ const sortedTopics = topics
   .map(t => ({ url: t.url, ...(t as any).frontmatter }))
   .sort((a, b) => a.order - b.order);
 
-import { t } from "../utils/i18n.js";
-// 获取当前语言（可以从 URL、cookie、localStorage 或默认值）
-//const lang = Astro.url.searchParams.get("lang") || "en";
-// 先取 URL 参数，再取浏览器语言，最后再 fallback 到 en
-import { getLang } from "../utils/getLang.ts";
-const lang = getLang();
 ---
 
 <Layout></Layout>
 <body>
     <Header />
     <main class="container">
-        <h2>{t("video.title", lang)}</h2>
-        <p>{t("video.subtitle", lang)}</p>
+        <h2 data-i18n="video.title">📺视频专题</h2>
+        <p data-i18n="video.subtitle">探索我的视频节目</p>
         <div class="album-grid">
           {
              sortedTopics.map(topic => (
@@ -40,4 +34,5 @@ const lang = getLang();
          </div>
         </main>
     <Footer/>
+  <script src="../../public/locales/lang.js"></script>
 </body>
