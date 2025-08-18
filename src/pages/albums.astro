@@ -42,16 +42,17 @@ if (selectedAlbum) {
       date: new Date(photo.data.date).toISOString().slice(0, 10),
     }));
 }
+
 ---
 
-<html lang="zh">
+
   <Layout></Layout>
   <body>
     <Header />
     <main class="albumscontainer">
-      {selectedAlbum ? (
+    <!--   {selectedAlbum ? (
         
-          <a href="/albums" style="display:inline-block;margin-bottom:1rem;">← 返回所有专辑</a>
+          // <a href="/albums" style="display:inline-block;margin-bottom:1rem;">← 返回所有专辑</a>
           <h2>{selectedAlbum.data.title}</h2>
           <p>{selectedAlbum.data.description}</p>
 
@@ -135,9 +136,9 @@ if (selectedAlbum) {
           </div>
         
       ) : (
-        <>
-          <h2>📷摄影专辑</h2>
-          <p>每个专辑代表一次完整的旅程与回忆。</p>
+        <> -->
+          <h2 data-i18n="albums.title">📷专辑</h2>
+          <p data-i18n="albums.subtitle">每个专辑代表一次完整的旅程与回忆。</p>
 
           <div class="album-grid">
             {sortedAlbums.map(album => (
@@ -152,8 +153,6 @@ if (selectedAlbum) {
             ))}
           </div>
         </>
-      )}
     </main>
     <Footer />
   </body>
-</html>

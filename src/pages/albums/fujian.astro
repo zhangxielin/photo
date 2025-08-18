@@ -27,7 +27,7 @@ const photoData = photos
     date: new Date(photo.data.date).toISOString().slice(0, 10),
   }));
 ---
-<html lang="zh">
+
 
    <Layout></Layout>
   <body>
@@ -35,13 +35,13 @@ const photoData = photos
 
     <main class="albumscontainer">
         <div class="section-header">
-            <a href="/albums" class="back-button">← 返回专辑列表</a>
+            <a href="/albums" class="back-button" data-i18n="albums.back">返回专辑列表</a>
             <div class="gallery-header">
                 <h2>{album.data.title}</h2>
                 <!--<p>{album.data.description}</p>-->
                 <div class="layout-toggle">
-                    <button data-layout="small" class="active">小图模式</button>
-                    <button data-layout="large">大图模式</button>
+                    <button data-layout="small" class="active" data-i18n="small_view">小图模式</button>
+                    <button data-layout="large" data-i18n="large_view">大图模式</button>
                 </div>
             </div>
         </div>
@@ -54,6 +54,6 @@ const photoData = photos
 
     <Footer />
 
- 
+   <script src="../../../public/locales/lang.js"></script>
   </body>
-</html>
+

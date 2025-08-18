@@ -1,13 +1,16 @@
 ---
 const email = "chachaphoto@icloud.com";
 const year = new Date().getFullYear();
+
+
 ---
 
 <footer style="background-color: #111; color: white; padding: 2rem 1rem; margin-top: 3rem;">
   <div style="max-width: 960px; margin: 0 auto; text-align: center;">
-    <p>&copy; {year} Zhang Xielin 版权所有</p>
+    <p>&copy; {year} Zhang Xielin</p>
     <p>
-      有购买版权或合作需求，请发邮件：<a href={`mailto:${email}`} style="color: #4fc3f7;">{email}</a>
+      <span data-i18n="footer.connect">如需购买版权或合作，请发送邮件至：</span><a href={'mailto:${email}'} style="color: #4fc3f7;">{email}</a>
     </p>
   </div>
 </footer>
+<script src="../../public/locales/lang.js"></script>

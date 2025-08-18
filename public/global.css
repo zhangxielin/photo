@@ -172,7 +172,7 @@ main {
 header {
   background-color: #1f1f1f;
   color: rgb(136, 73, 73);
-  padding: 10px 0;
+  padding: 10px 20px;
   text-align: left;
   display: flex;
   flex-wrap: wrap; /* 允许换行 */
@@ -222,6 +222,15 @@ nav ul li a.active {
   border-bottom: 2px solid currentColor;
 }
 
+#lang-toggle {
+  background-color: #ffcb00;
+  color: #333;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: auto;
+}
 
 .gallery-header {
   display: flex;

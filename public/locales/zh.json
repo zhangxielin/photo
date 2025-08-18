@@ -1,0 +1,18 @@
+{
+    "index.title": "画廊",
+    "index.photos_count":"照片总数:",
+    "index.order":"从新到旧",
+    "older.order":"从旧到新",
+    "large_view": "大图模式",
+    "small_view": "小图模式",
+    "nav.gallery": "画廊",
+    "nav.albums": "专辑",
+    "nav.video": "视频",
+    "nav.about": "关于",
+    "albums.title": "📷专辑",
+    "albums.subtitle": "每个专辑代表一次完整的旅程与回忆。",
+    "albums.back": "返回专辑列表",
+    "video.title": "📺视频专题",
+    "video.subtitle": "探索我的视频节目。",
+    "footer.connect": "如需购买版权或合作，请发送邮件至："
+}

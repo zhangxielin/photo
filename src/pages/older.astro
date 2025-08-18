@@ -18,9 +18,10 @@ const photoData = sortedPhotos.map(photo => ({
   image: photo.data.image,
   date: new Date(photo.data.date).toISOString().slice(0, 10)
 }));
+
 ---
 
-<html lang="zh">
+
   <Layout>
     
   </Layout>
@@ -28,11 +29,11 @@ const photoData = sortedPhotos.map(photo => ({
     <Header />
     <main>
       <div class="gallery-header">
-        <h2>我的画廊<span class="totle">（本站已有 {photoCount} 张照片）</span></h2>
+        <h2><span data-i18n="index.title">画廊</span><span class="totle">{photoCount} </span></h2>
         <div class="layout-toggle">
-          <a href="/" class="order">从新到旧</a>
-          <button data-layout="small" class="active">小图模式</button>
-          <button data-layout="large">大图模式</button>
+          <a href="/" class="order" data-i18n="older.order">从旧到新</a>
+          <button data-layout="small" class="active" data-i18n="small_view">小图模式</button>
+          <button data-layout="large" data-i18n="large_view">大图模式</button>
         </div>
       </div>
 
@@ -155,5 +156,6 @@ layoutButtons.forEach((button) => {
     });
   });
 </script>
+<script src="../../public/locales/lang.js"></script>
 </body>
-</html>
+

@@ -1,16 +1,21 @@
 ---
 const currentPath = Astro.url.pathname;
 const isGallery = Astro.url.pathname === '/' || Astro.url.pathname.startsWith('/older');
+
 ---
 
 <header>
   <h1><span>ChaCha Photo</span></h1>
   <nav>
     <ul>
-      <li><a href="/" class={isGallery ? 'active' : ''}>画廊</a></li>
-      <li><a href="/albums" class={currentPath.startsWith('/albums') ? 'active' : undefined}>专辑</a></li>
-      <li><a href="/video" class={currentPath.startsWith('/video') ? 'active' : undefined}>视频</a></li>
-      <li><a href="/about" class={currentPath.startsWith('/about') ? 'active' : undefined}>关于</a></li>
+      <li><a data-i18n="nav.gallery" href="/" class={isGallery ? 'active' : ''}>画廊</a></li>
+      <li><a data-i18n="nav.albums" href="/albums" class={currentPath.startsWith('/albums') ? 'active' : undefined}>专辑</a></li>
+      <li><a data-i18n="nav.video" href="/video" class={currentPath.startsWith('/video') ? 'active' : undefined}>视频</a></li>
+      <li><a data-i18n="nav.about" href="/about" class={currentPath.startsWith('/about') ? 'active' : undefined}>关于</a></li>
     </ul>
   </nav>
+  <button id="lang-toggle">
+        中文
+  </button>
 </header>
+<script src="../../public/locales/lang.js"></script>
