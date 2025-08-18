@@ -8,7 +8,7 @@ const photoCount = getGalleryCount();
 const photos = await getCollection('gallery');
 //检测浏览器语言
 const acceptLang = Astro.request.headers.get("accept-language") || "无";
-<p>请求头是：{acceptLang}</p>
+
 // 最新排序
 const sortedPhotos = [...photos].sort((a, b) =>
   new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
@@ -36,6 +36,7 @@ const lang = getLang();
   <body>
     <Header />
     <main>
+      <p>请求头是;{acceptLang}</p>
       <div class="gallery-header">
         <h2>{t("index.title", lang)}<span class="totle">（{t("index.photos_count", lang)} {photoCount} ）</span></h2>
         <div class="layout-toggle">
