@@ -163,8 +163,8 @@ layoutButtons.forEach((button) => {
   });
 </script>
 ---
-const lang = detectLang(Astro.request.headers);
+const acceptLang = Astro.request.headers.get("accept-language") || "无";
 ---
-<p>检测到语言：{lang}</p>
+<p>请求头是：{acceptLang}</p>
 </body>
 
