@@ -38,12 +38,12 @@ const photoData = photos
             <a href="/albums" class="back-button" data-i18n="albums.back">返回专辑列表</a>
             <div class="gallery-header">
                 <h2>{album.data.title}</h2>
-                <!--<p>{album.data.description}</p>-->
                 <div class="layout-toggle">
                     <button data-layout="small" class="active" data-i18n="small_view">小图模式</button>
                     <button data-layout="large" data-i18n="large_view">大图模式</button>
                 </div>
             </div>
+            <p>{album.data.description}</p>
         </div>
         <PhotoGallery photoData={photoData} />
       </div>
