@@ -17,7 +17,7 @@
 
     // 更新按钮
     const btn = document.getElementById("lang-toggle");
-    if (btn) btn.innerText = lang === "zh" ? "中文" : "EN";
+    if (btn) btn.innerText = lang === "zh" ? "EN" : "中文";
 
     // 存储 & <html lang="">
     localStorage.setItem("lang", lang);
